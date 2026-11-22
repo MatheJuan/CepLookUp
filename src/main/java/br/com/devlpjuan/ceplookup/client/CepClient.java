@@ -21,7 +21,7 @@ public class CepClient {
         this.mapper = mapper;
     }
 
-    public EnderecoDto consultaCep(EnderecoDto cep) throws IOException, InterruptedException {
+    public EnderecoDto consultaCep(String cep) throws IOException, InterruptedException {
 
         HttpRequest request = HttpRequest.newBuilder()
                 .uri(URI.create("https://viacep.com.br/ws/"+ cep +"/json"))
