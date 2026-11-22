@@ -21,12 +21,16 @@ public class CepClient {
         this.mapper = mapper;
     }
 
-    public EnderecoDto consultaCep(EnderecoDto endereco) throws IOException, InterruptedException {
+    public EnderecoDto consultaCep(EnderecoDto cep) throws IOException, InterruptedException {
 
         HttpRequest request = HttpRequest.newBuilder()
-                .uri(URI.create("https://viacep.com.br/ws/"+ endereco +"/json"))
+                .uri(URI.create("https://viacep.com.br/ws/"+ cep +"/json"))
                 .GET().build();
         HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
+
+        if(response.statusCode() !=200){
+            throw new IOException("Erro ao consultar cep: " + response.statusCode());
+        }
 
         return mapper.readValue(
                 response.body(),
