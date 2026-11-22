@@ -1,0 +1,13 @@
+package br.com.devlpjuan.ceplookup;
+
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+
+@SpringBootApplication
+public class CepLookupApplication {
+
+    public static void main(String[] args) {
+        SpringApplication.run(CepLookupApplication.class, args);
+    }
+
+}
