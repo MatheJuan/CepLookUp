@@ -1,6 +1,7 @@
 package br.com.devlpjuan.ceplookup.client;
 
 import br.com.devlpjuan.ceplookup.dto.EnderecoDto;
+import br.com.devlpjuan.ceplookup.exception.CepException;
 import org.springframework.stereotype.Component;
 import tools.jackson.databind.ObjectMapper;
 
@@ -21,20 +22,24 @@ public class CepClient {
         this.mapper = mapper;
     }
 
-    public EnderecoDto consultaCep(String cep) throws IOException, InterruptedException {
+    public EnderecoDto consultaCep(String cep) {
+        try {
+            HttpRequest request = HttpRequest.newBuilder()
+                    .uri(URI.create("https://viacep.com.br/ws/"+ cep +"/json"))
+                    .GET().build();
+            HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
 
-        HttpRequest request = HttpRequest.newBuilder()
-                .uri(URI.create("https://viacep.com.br/ws/"+ cep +"/json"))
-                .GET().build();
-        HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
+            return mapper.readValue(
+                    response.body(),
+                    EnderecoDto.class);
 
-        if(response.statusCode() !=200){
-            throw new IOException("Erro ao consultar cep: " + response.statusCode());
+        } catch (IOException e) {
+            throw new CepException.ViaCepException("Falha na comunicacao.",e);
+        } catch (InterruptedException e) {
+            throw new CepException.ViaCepTimeoutException("Requisicao interrompida",e);
         }
 
-        return mapper.readValue(
-                response.body(),
-                EnderecoDto.class);
+
     }
 
 
