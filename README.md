@@ -150,17 +150,6 @@ A aplicação estará disponível em:
 ```text
 http://localhost:8080
 ```
-
-## Melhorias futuras
-
-- [ ] Implementação de testes unitários.
-- [ ] Implementação de testes de integração.
-- [ ] Documentação com Swagger/OpenAPI.
-- [ ] Cache de consultas com Redis.
-- [ ] Integração com provedores alternativos de CEP.
-- [ ] Implementação de Fallback e Circuit Breaker.
-- [ ] Containerização com Docker.
-
 ## Serviço externo
 
 - [ViaCEP — Documentação oficial](https://viacep.com.br/)
